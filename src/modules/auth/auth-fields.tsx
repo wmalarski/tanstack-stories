@@ -1,0 +1,53 @@
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "@/components/ui/field";
+import { FormError } from "@/components/ui/form-error";
+import { Input } from "@/components/ui/input";
+
+import type { APIError } from "better-auth";
+
+type AuthFieldsProps = {
+  pending?: boolean;
+  result?: APIError["body"];
+};
+
+export const AuthFields = ({ pending, result }: AuthFieldsProps) => {
+  return (
+    <FieldSet>
+      <FormError message={result?.message} />
+
+      <FieldGroup>
+        <Field data-invalid={!!result?.errors?.email}>
+          <FieldLabel>Email</FieldLabel>
+          <Input
+            disabled={pending}
+            inputMode="email"
+            name="email"
+            placeholder="Email"
+            required
+            type="email"
+            width="full"
+          />
+          <FieldError errors={[{ message: result?.errors?.email }]} />
+        </Field>
+
+        <Field data-invalid={!!result?.errors?.password}>
+          <FieldLabel>Password</FieldLabel>
+          <Input
+            disabled={pending}
+            name="password"
+            placeholder="Password"
+            required
+            type="password"
+            width="full"
+          />
+          <FieldError errors={[{ message: result?.errors?.password }]} />
+        </Field>
+      </FieldGroup>
+    </FieldSet>
+  );
+};
