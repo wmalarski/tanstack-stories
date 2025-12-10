@@ -5,7 +5,6 @@ import { Spinner } from "@/components/ui/spinner";
 import { Form, useForm } from "@formisch/react";
 import type { APIError } from "better-auth";
 import { useState } from "react";
-import { useFormStatus } from "react-dom";
 
 import { AuthFields } from "./auth-fields";
 import { AuthSchema, type AuthSchemaOutput } from "./validation";
@@ -23,7 +22,8 @@ export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
 
   const [result, setResult] = useState<APIError["body"]>();
 
-  const loginForm = useForm({
+  const signInForm = useForm({
+    initialInput: { email: "", password: "" },
     schema: AuthSchema,
   });
 
@@ -49,31 +49,25 @@ export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
         <CardTitle>Sign In</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form of={loginForm} onSubmit={onSubmit}>
-          <FormContent result={result} />
+        <Form
+          className="flex flex-col gap-4"
+          of={signInForm}
+          onSubmit={onSubmit}
+        >
+          <AuthFields
+            of={signInForm}
+            pending={signInForm.isSubmitting}
+            result={result}
+          />
+          <Button disabled={signInForm.isSubmitting} type="submit">
+            {signInForm.isSubmitting ? <Spinner /> : null}
+            Sign In
+          </Button>
           <Button onClick={onSignUpClick} type="button" variant="link">
             Sign Up
           </Button>
         </Form>
       </CardContent>
     </Card>
-  );
-};
-
-type FormContentProps = {
-  result?: APIError["body"];
-};
-
-const FormContent = ({ result }: FormContentProps) => {
-  const { pending } = useFormStatus();
-
-  return (
-    <>
-      <AuthFields pending={pending} result={result} />
-      <Button disabled={pending} type="submit">
-        {pending ? <Spinner /> : null}
-        Sign In
-      </Button>
-    </>
   );
 };
