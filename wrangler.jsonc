@@ -20,7 +20,7 @@
     "enabled": true
   },
   "vars": {
-    "BETTER_AUTH_URL": "https://solid-tasks.w-malarski.workers.dev"
+    "VITE_BETTER_AUTH_URL": "https://solid-tasks.w-malarski.workers.dev"
   }
   /**
    * Smart Placement

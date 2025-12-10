@@ -2,6 +2,7 @@
   "dependencies": {
     "@base-ui-components/react": "1.0.0-rc.0",
     "@cloudflare/vite-plugin": "^1.17.0",
+    "@formisch/react": "^0.2.0",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-devtools": "^0.8.4",
     "@tanstack/react-router": "^1.140.1",
