@@ -1,10 +1,20 @@
+import { TanStackQueryProvider } from "@/integrations/tanstack-query/provider";
+
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
+import {
+  createRootRoute,
+  HeadContent,
+  Outlet,
+  Scripts,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
+import type { PropsWithChildren } from "react";
 
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
+  component: RootComponent,
   head: () => ({
     links: [
       {
@@ -25,11 +35,18 @@ export const Route = createRootRoute({
       },
     ],
   }),
-
   shellComponent: RootDocument,
 });
 
-function RootDocument({ children }: { children: React.ReactNode }) {
+function RootComponent() {
+  return (
+    <TanStackQueryProvider>
+      <Outlet />
+    </TanStackQueryProvider>
+  );
+}
+
+function RootDocument({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <head>
@@ -40,6 +57,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <TanStackDevtools
           config={{ position: "bottom-right" }}
           plugins={[
+            {
+              name: "Tanstack Query",
+              render: <ReactQueryDevtoolsPanel />,
+            },
             {
               name: "Tanstack Router",
               render: <TanStackRouterDevtoolsPanel />,
