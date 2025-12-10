@@ -1,71 +1,64 @@
 import {
+  Field,
   FieldError,
   FieldGroup,
   FieldLabel,
-  Field as FieldRoot,
   FieldSet,
 } from "@/components/ui/field";
 import { FormError } from "@/components/ui/form-error";
-import { Input } from "@/components/ui/input";
+import { withForm } from "@/integrations/tanstack-form";
 
-import { Field, type FormStore } from "@formisch/react";
 import type { APIError } from "better-auth";
 
-import type { AuthSchema } from "./validation";
+import { AuthSchema } from "./validation";
 
 type AuthFieldsProps = {
   result?: APIError["body"];
-  of: FormStore<typeof AuthSchema>;
 };
 
-export const AuthFields = ({ result, of }: AuthFieldsProps) => {
-  return (
-    <FieldSet>
-      <FormError message={result?.message} />
+export const AuthFields = withForm({
+  defaultValues: { email: "", password: "" },
+  props: {} as AuthFieldsProps,
+  render: ({ form, result }) => {
+    return (
+      <FieldSet>
+        <FormError message={result?.message} />
 
-      <FieldGroup>
-        <Field of={of} path={["email"]}>
-          {(field) => (
-            <FieldRoot data-invalid={!field.isValid}>
-              <FieldLabel>Email</FieldLabel>
-              <Input
-                {...field.props}
-                disabled={of.isSubmitting}
-                inputMode="email"
-                placeholder="Email"
-                required
-                type="email"
-                value={field.input}
-                width="full"
-              />
-              <FieldError
-                errors={field.errors?.map((message) => ({ message }))}
-              />
-            </FieldRoot>
-          )}
-        </Field>
+        <FieldGroup>
+          <form.AppField name="email">
+            {(field) => (
+              <Field data-invalid={!field.state.meta.isValid}>
+                <FieldLabel>Email</FieldLabel>
+                <field.Input
+                  inputMode="email"
+                  placeholder="Email"
+                  required
+                  type="email"
+                  width="full"
+                />
+                <FieldError errors={field.state.meta.errors} />
+              </Field>
+            )}
+          </form.AppField>
 
-        <Field of={of} path={["password"]}>
-          {(field) => (
-            <FieldRoot data-invalid={!field.isValid}>
-              <FieldLabel>Password</FieldLabel>
-              <Input
-                {...field.props}
-                disabled={of.isSubmitting}
-                name="password"
-                placeholder="Password"
-                required
-                type="password"
-                value={field.input}
-                width="full"
-              />
-              <FieldError
-                errors={field.errors?.map((message) => ({ message }))}
-              />
-            </FieldRoot>
-          )}
-        </Field>
-      </FieldGroup>
-    </FieldSet>
-  );
-};
+          <form.AppField name="password">
+            {(field) => (
+              <Field data-invalid={!field.state.meta.isValid}>
+                <FieldLabel>Password</FieldLabel>
+                <field.Input
+                  name="password"
+                  placeholder="Password"
+                  required
+                  type="password"
+                  width="full"
+                />
+                <FieldError errors={field.state.meta.errors} />
+              </Field>
+            )}
+          </form.AppField>
+        </FieldGroup>
+      </FieldSet>
+    );
+  },
+  validators: { onSubmit: AuthSchema },
+});

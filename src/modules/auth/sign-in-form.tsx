@@ -1,46 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Spinner } from "@/components/ui/spinner";
+import { authClient } from "@/integrations/better-auth/client";
+import { useAppForm } from "@/integrations/tanstack-form";
 
-import { Form, useForm } from "@formisch/react";
 import type { APIError } from "better-auth";
 import { useState } from "react";
 
 import { AuthFields } from "./auth-fields";
-import { AuthSchema, type AuthSchemaOutput } from "./validation";
-
-// import { signInMutation } from "./services/actions";
-// import type { APIErrorBody } from "./services/router";
-// import { useUserContext } from "./user-context";
+import { AuthSchema } from "./validation";
 
 type SignInFormProps = {
   onSignUpClick: () => void;
 };
 
 export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
-  //   const userContext = useUserContext();
-
   const [result, setResult] = useState<APIError["body"]>();
 
-  const signInForm = useForm({
-    initialInput: { email: "", password: "" },
-    schema: AuthSchema,
+  const signInForm = useAppForm({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+    onSubmit: async (data) => {
+      const response = await authClient.signIn.email(data.value);
+
+      if (response.error) {
+        setResult(response);
+        return;
+      }
+
+      console.log("[data]", response.data);
+    },
+    validators: {
+      onSubmit: AuthSchema,
+    },
   });
 
-  //   const action = async (formData: FormData) => {
-  //     const result = await signInMutation(formData);
-
-  //     startTransition(async () => {
-  //       setResult(result ?? undefined);
-
-  //       if (!result) {
-  //         userContext.invalidate();
-  //       }
-  //     });
-  //   };
-
-  const onSubmit = (output: AuthSchemaOutput) => {
-    console.log("[output]", { output });
+  const formAction = async () => {
+    await signInForm.handleSubmit();
   };
 
   return (
@@ -49,20 +46,13 @@ export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
         <CardTitle>Sign In</CardTitle>
       </CardHeader>
       <CardContent>
-        <Form
-          className="flex flex-col gap-4"
-          of={signInForm}
-          onSubmit={onSubmit}
-        >
-          <AuthFields of={signInForm} result={result} />
-          <Button disabled={signInForm.isSubmitting} type="submit">
-            {signInForm.isSubmitting ? <Spinner /> : null}
-            Sign In
-          </Button>
+        <form action={formAction} className="flex flex-col gap-4">
+          <AuthFields form={signInForm} result={result} />
+          <signInForm.Button type="submit">Sign In</signInForm.Button>
           <Button onClick={onSignUpClick} type="button" variant="link">
             Sign Up
           </Button>
-        </Form>
+        </form>
       </CardContent>
     </Card>
   );
