@@ -64,33 +64,35 @@ export const verification = sqliteTable("verification", {
   value: text("value").notNull(),
 });
 
-export const bookmark = sqliteTable("bookmark", {
+export const board = sqliteTable("board", {
+  axis: text("axis", { mode: "json" }).notNull(),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
-  doneAt: integer("done_at", { mode: "timestamp" }),
+  description: text("description"),
   id: text("id").primaryKey(),
-  note: text("note"),
-  preview: text("preview"),
-  rate: real("rate"),
-  status: text("status").notNull(),
-  text: text("text"),
   title: text("title").notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
-  url: text("url"),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const tag = sqliteTable("tag", {
+export const node = sqliteTable("node", {
+  boardId: text("board_id")
+    .notNull()
+    .references(() => board.id, { onDelete: "cascade" }),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
+  description: text("description"),
+  estimate: real("estimate"),
   id: text("id").primaryKey(),
-  name: text("name").notNull(),
+  link: text("link"),
+  position: text("position", { mode: "json" }).notNull(),
+  title: text("title").notNull(),
   updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
@@ -99,17 +101,23 @@ export const tag = sqliteTable("tag", {
     .references(() => user.id, { onDelete: "cascade" }),
 });
 
-export const bookmarkTag = sqliteTable("bookmark_tag", {
-  bookmarkId: text("bookmark_id")
+export const edge = sqliteTable("edge", {
+  boardId: text("board_id")
     .notNull()
-    .references(() => bookmark.id, { onDelete: "cascade" }),
+    .references(() => board.id, { onDelete: "cascade" }),
   createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(
     () => /* @__PURE__ */ new Date(),
   ),
-  id: text("id").primaryKey(),
-  tagId: text("tag_id")
+  fromNodeId: text("from_node_id")
     .notNull()
-    .references(() => tag.id, { onDelete: "cascade" }),
+    .references(() => node.id, { onDelete: "cascade" }),
+  id: text("id").primaryKey(),
+  toNodeId: text("to_node_id")
+    .notNull()
+    .references(() => node.id, { onDelete: "cascade" }),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).$defaultFn(
+    () => /* @__PURE__ */ new Date(),
+  ),
   userId: text("user_id")
     .notNull()
     .references(() => user.id, { onDelete: "cascade" }),
@@ -117,10 +125,10 @@ export const bookmarkTag = sqliteTable("bookmark_tag", {
 
 export const schema = {
   account,
-  bookmark,
-  bookmarkTag,
+  board,
+  edge,
+  node,
   session,
-  tag,
   user,
   verification,
 };
