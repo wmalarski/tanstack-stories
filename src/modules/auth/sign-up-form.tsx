@@ -13,11 +13,11 @@ import { AuthSchema, type AuthSchemaOutput } from "./validation";
 // import type { APIErrorBody } from "./services/router";
 // import { useUserContext } from "./user-context";
 
-type SignInFormProps = {
-  onSignUpClick: () => void;
+type SignUpFormProps = {
+  onSignInClick: () => void;
 };
 
-export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
+export const SignUpForm = ({ onSignInClick }: SignUpFormProps) => {
   //   const userContext = useUserContext();
 
   const [result, setResult] = useState<APIError["body"]>();
@@ -57,10 +57,10 @@ export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
           <AuthFields of={signInForm} result={result} />
           <Button disabled={signInForm.isSubmitting} type="submit">
             {signInForm.isSubmitting ? <Spinner /> : null}
-            Sign In
-          </Button>
-          <Button onClick={onSignUpClick} type="button" variant="link">
             Sign Up
+          </Button>
+          <Button onClick={onSignInClick} type="button" variant="link">
+            Sign In
           </Button>
         </Form>
       </CardContent>

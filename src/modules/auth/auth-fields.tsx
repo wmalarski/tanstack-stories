@@ -14,12 +14,11 @@ import type { APIError } from "better-auth";
 import type { AuthSchema } from "./validation";
 
 type AuthFieldsProps = {
-  pending?: boolean;
   result?: APIError["body"];
   of: FormStore<typeof AuthSchema>;
 };
 
-export const AuthFields = ({ pending, result, of }: AuthFieldsProps) => {
+export const AuthFields = ({ result, of }: AuthFieldsProps) => {
   return (
     <FieldSet>
       <FormError message={result?.message} />
@@ -31,7 +30,7 @@ export const AuthFields = ({ pending, result, of }: AuthFieldsProps) => {
               <FieldLabel>Email</FieldLabel>
               <Input
                 {...field.props}
-                disabled={pending}
+                disabled={of.isSubmitting}
                 inputMode="email"
                 placeholder="Email"
                 required
@@ -52,7 +51,7 @@ export const AuthFields = ({ pending, result, of }: AuthFieldsProps) => {
               <FieldLabel>Password</FieldLabel>
               <Input
                 {...field.props}
-                disabled={pending}
+                disabled={of.isSubmitting}
                 name="password"
                 placeholder="Password"
                 required
