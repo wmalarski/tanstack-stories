@@ -1,12 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { authClient } from "@/integrations/better-auth/client";
 import { useAppForm } from "@/integrations/tanstack-form";
 
-import type { APIError } from "better-auth";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 import { AuthFields } from "./auth-fields";
+import { signInMutationOptions } from "./services";
 import { AuthSchema } from "./validation";
 
 type SignInFormProps = {
@@ -14,7 +13,7 @@ type SignInFormProps = {
 };
 
 export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
-  const [result, setResult] = useState<APIError["body"]>();
+  const signInMutation = useMutation(signInMutationOptions());
 
   const signInForm = useAppForm({
     defaultValues: {
@@ -22,14 +21,7 @@ export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
       password: "",
     },
     onSubmit: async (data) => {
-      const response = await authClient.signIn.email(data.value);
-
-      if (response.error) {
-        setResult(response);
-        return;
-      }
-
-      console.log("[data]", response.data);
+      await signInMutation.mutateAsync(data.value);
     },
     validators: {
       onSubmit: AuthSchema,
@@ -47,7 +39,7 @@ export const SignInForm = ({ onSignUpClick }: SignInFormProps) => {
       </CardHeader>
       <CardContent>
         <form action={formAction} className="flex flex-col gap-4">
-          <AuthFields form={signInForm} result={result} />
+          <AuthFields error={signInMutation.error} form={signInForm} />
           <signInForm.Button type="submit">Sign In</signInForm.Button>
           <Button onClick={onSignUpClick} type="button" variant="link">
             Sign Up

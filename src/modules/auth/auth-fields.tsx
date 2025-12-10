@@ -8,21 +8,19 @@ import {
 import { FormError } from "@/components/ui/form-error";
 import { withForm } from "@/integrations/tanstack-form";
 
-import type { APIError } from "better-auth";
-
 import { AuthSchema } from "./validation";
 
 type AuthFieldsProps = {
-  result?: APIError["body"];
+  error?: Error | null;
 };
 
 export const AuthFields = withForm({
   defaultValues: { email: "", password: "" },
   props: {} as AuthFieldsProps,
-  render: ({ form, result }) => {
+  render: ({ form, error }) => {
     return (
       <FieldSet>
-        <FormError message={result?.message} />
+        <FormError message={error?.message} />
 
         <FieldGroup>
           <form.AppField name="email">
