@@ -14,6 +14,7 @@ export const Button = ({
   return (
     <UiButton {...props} disabled={form.state.isSubmitting}>
       {form.state.isSubmitting ? <Spinner /> : null}
+      {children}
     </UiButton>
   );
 };

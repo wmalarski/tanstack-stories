@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Link } from "@/components/ui/link";
 import { useAppForm } from "@/integrations/tanstack-form";
 
 import { useMutation } from "@tanstack/react-query";
@@ -8,11 +8,7 @@ import { AuthFields } from "./auth-fields";
 import { signUpMutationOptions } from "./services";
 import { AuthSchema } from "./validation";
 
-type SignUpFormProps = {
-  onSignInClick: () => void;
-};
-
-export const SignUpForm = ({ onSignInClick }: SignUpFormProps) => {
+export const SignUpForm = () => {
   const signInMutation = useMutation(signUpMutationOptions());
 
   const signUpForm = useAppForm({
@@ -35,16 +31,16 @@ export const SignUpForm = ({ onSignInClick }: SignUpFormProps) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Sign In</CardTitle>
+        <CardTitle>Sign Up</CardTitle>
       </CardHeader>
       <CardContent>
-        <form action={formAction} className="flex flex-col gap-4">
-          <AuthFields error={signInMutation.error} form={signUpForm} />
-          <signUpForm.Button type="submit">Sign Up</signUpForm.Button>
-          <Button onClick={onSignInClick} type="button" variant="link">
-            Sign In
-          </Button>
-        </form>
+        <signUpForm.AppForm>
+          <form action={formAction} className="flex flex-col gap-4">
+            <AuthFields error={signInMutation.error} form={signUpForm} />
+            <signUpForm.Button type="submit">Sign Up</signUpForm.Button>
+            <Link to="/">Sign In</Link>
+          </form>
+        </signUpForm.AppForm>
       </CardContent>
     </Card>
   );
