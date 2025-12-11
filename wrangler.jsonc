@@ -10,7 +10,8 @@
     {
       "binding": "prod_stories",
       "database_id": "27a37fec-e671-4030-9945-eb341d906d58",
-      "database_name": "prod-stories"
+      "database_name": "prod-stories",
+      "remote": true
     }
   ],
   "main": "@tanstack/react-start/server-entry",

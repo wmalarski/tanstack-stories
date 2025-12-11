@@ -42,6 +42,19 @@ function RootComponent() {
   return (
     <TanStackQueryProvider>
       <Outlet />
+      <TanStackDevtools
+        config={{ position: "bottom-right" }}
+        plugins={[
+          {
+            name: "Tanstack Query",
+            render: <ReactQueryDevtoolsPanel />,
+          },
+          {
+            name: "Tanstack Router",
+            render: <TanStackRouterDevtoolsPanel />,
+          },
+        ]}
+      />
     </TanStackQueryProvider>
   );
 }
@@ -54,19 +67,7 @@ function RootDocument({ children }: PropsWithChildren) {
       </head>
       <body>
         {children}
-        <TanStackDevtools
-          config={{ position: "bottom-right" }}
-          plugins={[
-            {
-              name: "Tanstack Query",
-              render: <ReactQueryDevtoolsPanel />,
-            },
-            {
-              name: "Tanstack Router",
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        />
+
         <Scripts />
       </body>
     </html>

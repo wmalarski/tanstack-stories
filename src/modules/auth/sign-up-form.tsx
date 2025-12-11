@@ -39,6 +39,7 @@ export const SignUpForm = () => {
             <AuthFields error={signInMutation.error} form={signUpForm} />
             <signUpForm.Button type="submit">Sign Up</signUpForm.Button>
             <Link to="/">Sign In</Link>
+            <Link to="/boards">Boards</Link>
           </form>
         </signUpForm.AppForm>
       </CardContent>
