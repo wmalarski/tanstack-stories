@@ -1,632 +1,592 @@
 {
-  "version": "6",
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  },
   "dialect": "sqlite",
+  "enums": {},
   "id": "855ba0eb-86ec-44a6-bbbf-4fc0ffa8501a",
+  "internal": {
+    "indexes": {}
+  },
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "account": {
-      "name": "account",
+      "checkConstraints": {},
       "columns": {
         "access_token": {
+          "autoincrement": false,
           "name": "access_token",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "access_token_expires_at": {
+          "autoincrement": false,
           "name": "access_token_expires_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "account_id": {
+          "autoincrement": false,
           "name": "account_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "created_at": {
+          "autoincrement": false,
           "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "id": {
+          "autoincrement": false,
           "name": "id",
-          "type": "text",
-          "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": true,
+          "type": "text"
         },
         "id_token": {
+          "autoincrement": false,
           "name": "id_token",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "password": {
+          "autoincrement": false,
           "name": "password",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "provider_id": {
+          "autoincrement": false,
           "name": "provider_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "refresh_token": {
+          "autoincrement": false,
           "name": "refresh_token",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "refresh_token_expires_at": {
+          "autoincrement": false,
           "name": "refresh_token_expires_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "scope": {
+          "autoincrement": false,
           "name": "scope",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "updated_at": {
+          "autoincrement": false,
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "user_id": {
+          "autoincrement": false,
           "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         }
       },
-      "indexes": {},
+      "compositePrimaryKeys": {},
       "foreignKeys": {
         "account_user_id_user_id_fk": {
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "name": "account_user_id_user_id_fk",
-          "tableFrom": "account",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "tableFrom": "account",
+          "tableTo": "user"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+      "indexes": {},
+      "name": "account",
+      "uniqueConstraints": {}
     },
     "board": {
-      "name": "board",
+      "checkConstraints": {},
       "columns": {
         "axis": {
+          "autoincrement": false,
           "name": "axis",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "created_at": {
+          "autoincrement": false,
           "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "description": {
+          "autoincrement": false,
           "name": "description",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "id": {
+          "autoincrement": false,
           "name": "id",
-          "type": "text",
-          "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": true,
+          "type": "text"
         },
         "title": {
+          "autoincrement": false,
           "name": "title",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "updated_at": {
+          "autoincrement": false,
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "user_id": {
+          "autoincrement": false,
           "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         }
       },
-      "indexes": {},
+      "compositePrimaryKeys": {},
       "foreignKeys": {
         "board_user_id_user_id_fk": {
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "name": "board_user_id_user_id_fk",
-          "tableFrom": "board",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "tableFrom": "board",
+          "tableTo": "user"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+      "indexes": {},
+      "name": "board",
+      "uniqueConstraints": {}
     },
     "edge": {
-      "name": "edge",
+      "checkConstraints": {},
       "columns": {
         "board_id": {
+          "autoincrement": false,
           "name": "board_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "created_at": {
+          "autoincrement": false,
           "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "from_node_id": {
+          "autoincrement": false,
           "name": "from_node_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "id": {
+          "autoincrement": false,
           "name": "id",
-          "type": "text",
-          "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": true,
+          "type": "text"
         },
         "to_node_id": {
+          "autoincrement": false,
           "name": "to_node_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "updated_at": {
+          "autoincrement": false,
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "user_id": {
+          "autoincrement": false,
           "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         }
       },
-      "indexes": {},
+      "compositePrimaryKeys": {},
       "foreignKeys": {
         "edge_board_id_board_id_fk": {
+          "columnsFrom": ["board_id"],
+          "columnsTo": ["id"],
           "name": "edge_board_id_board_id_fk",
-          "tableFrom": "edge",
-          "tableTo": "board",
-          "columnsFrom": [
-            "board_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "tableFrom": "edge",
+          "tableTo": "board"
         },
         "edge_from_node_id_node_id_fk": {
+          "columnsFrom": ["from_node_id"],
+          "columnsTo": ["id"],
           "name": "edge_from_node_id_node_id_fk",
-          "tableFrom": "edge",
-          "tableTo": "node",
-          "columnsFrom": [
-            "from_node_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "tableFrom": "edge",
+          "tableTo": "node"
         },
         "edge_to_node_id_node_id_fk": {
+          "columnsFrom": ["to_node_id"],
+          "columnsTo": ["id"],
           "name": "edge_to_node_id_node_id_fk",
-          "tableFrom": "edge",
-          "tableTo": "node",
-          "columnsFrom": [
-            "to_node_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
+          "onUpdate": "no action",
+          "tableFrom": "edge",
+          "tableTo": "node"
         },
         "edge_user_id_user_id_fk": {
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "name": "edge_user_id_user_id_fk",
-          "tableFrom": "edge",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
           "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
-    },
-    "node": {
-      "name": "node",
-      "columns": {
-        "board_id": {
-          "name": "board_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "estimate": {
-          "name": "estimate",
-          "type": "real",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "id": {
-          "name": "id",
-          "type": "text",
-          "primaryKey": true,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "link": {
-          "name": "link",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "position": {
-          "name": "position",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
-        },
-        "updated_at": {
-          "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false
-        },
-        "user_id": {
-          "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "autoincrement": false
+          "onUpdate": "no action",
+          "tableFrom": "edge",
+          "tableTo": "user"
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "node_board_id_board_id_fk": {
-          "name": "node_board_id_board_id_fk",
-          "tableFrom": "node",
-          "tableTo": "board",
-          "columnsFrom": [
-            "board_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+      "name": "edge",
+      "uniqueConstraints": {}
+    },
+    "node": {
+      "checkConstraints": {},
+      "columns": {
+        "board_id": {
+          "autoincrement": false,
+          "name": "board_id",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
         },
-        "node_user_id_user_id_fk": {
-          "name": "node_user_id_user_id_fk",
-          "tableFrom": "node",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
+        "created_at": {
+          "autoincrement": false,
+          "name": "created_at",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "integer"
+        },
+        "description": {
+          "autoincrement": false,
+          "name": "description",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "estimate": {
+          "autoincrement": false,
+          "name": "estimate",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "real"
+        },
+        "id": {
+          "autoincrement": false,
+          "name": "id",
+          "notNull": true,
+          "primaryKey": true,
+          "type": "text"
+        },
+        "link": {
+          "autoincrement": false,
+          "name": "link",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "position": {
+          "autoincrement": false,
+          "name": "position",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "title": {
+          "autoincrement": false,
+          "name": "title",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
+        },
+        "updated_at": {
+          "autoincrement": false,
+          "name": "updated_at",
+          "notNull": false,
+          "primaryKey": false,
+          "type": "integer"
+        },
+        "user_id": {
+          "autoincrement": false,
+          "name": "user_id",
+          "notNull": true,
+          "primaryKey": false,
+          "type": "text"
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+      "foreignKeys": {
+        "node_board_id_board_id_fk": {
+          "columnsFrom": ["board_id"],
+          "columnsTo": ["id"],
+          "name": "node_board_id_board_id_fk",
+          "onDelete": "cascade",
+          "onUpdate": "no action",
+          "tableFrom": "node",
+          "tableTo": "board"
+        },
+        "node_user_id_user_id_fk": {
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "name": "node_user_id_user_id_fk",
+          "onDelete": "cascade",
+          "onUpdate": "no action",
+          "tableFrom": "node",
+          "tableTo": "user"
+        }
+      },
+      "indexes": {},
+      "name": "node",
+      "uniqueConstraints": {}
     },
     "session": {
-      "name": "session",
+      "checkConstraints": {},
       "columns": {
         "created_at": {
+          "autoincrement": false,
           "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "expires_at": {
+          "autoincrement": false,
           "name": "expires_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "id": {
+          "autoincrement": false,
           "name": "id",
-          "type": "text",
-          "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": true,
+          "type": "text"
         },
         "ip_address": {
+          "autoincrement": false,
           "name": "ip_address",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "token": {
+          "autoincrement": false,
           "name": "token",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "updated_at": {
+          "autoincrement": false,
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "user_agent": {
+          "autoincrement": false,
           "name": "user_agent",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "user_id": {
+          "autoincrement": false,
           "name": "user_id",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "foreignKeys": {
+        "session_user_id_user_id_fk": {
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "name": "session_user_id_user_id_fk",
+          "onDelete": "cascade",
+          "onUpdate": "no action",
+          "tableFrom": "session",
+          "tableTo": "user"
         }
       },
       "indexes": {
         "session_token_unique": {
-          "name": "session_token_unique",
-          "columns": [
-            "token"
-          ],
-          "isUnique": true
+          "columns": ["token"],
+          "isUnique": true,
+          "name": "session_token_unique"
         }
       },
-      "foreignKeys": {
-        "session_user_id_user_id_fk": {
-          "name": "session_user_id_user_id_fk",
-          "tableFrom": "session",
-          "tableTo": "user",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+      "name": "session",
+      "uniqueConstraints": {}
     },
     "user": {
-      "name": "user",
+      "checkConstraints": {},
       "columns": {
         "created_at": {
+          "autoincrement": false,
           "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "email": {
+          "autoincrement": false,
           "name": "email",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "email_verified": {
+          "autoincrement": false,
           "name": "email_verified",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "id": {
+          "autoincrement": false,
           "name": "id",
-          "type": "text",
-          "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": true,
+          "type": "text"
         },
         "image": {
+          "autoincrement": false,
           "name": "image",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "name": {
+          "autoincrement": false,
           "name": "name",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "updated_at": {
+          "autoincrement": false,
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         }
       },
+      "compositePrimaryKeys": {},
+      "foreignKeys": {},
       "indexes": {
         "user_email_unique": {
-          "name": "user_email_unique",
-          "columns": [
-            "email"
-          ],
-          "isUnique": true
+          "columns": ["email"],
+          "isUnique": true,
+          "name": "user_email_unique"
         }
       },
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+      "name": "user",
+      "uniqueConstraints": {}
     },
     "verification": {
-      "name": "verification",
+      "checkConstraints": {},
       "columns": {
         "created_at": {
+          "autoincrement": false,
           "name": "created_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "expires_at": {
+          "autoincrement": false,
           "name": "expires_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "id": {
+          "autoincrement": false,
           "name": "id",
-          "type": "text",
-          "primaryKey": true,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": true,
+          "type": "text"
         },
         "identifier": {
+          "autoincrement": false,
           "name": "identifier",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         },
         "updated_at": {
+          "autoincrement": false,
           "name": "updated_at",
-          "type": "integer",
-          "primaryKey": false,
           "notNull": false,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "integer"
         },
         "value": {
+          "autoincrement": false,
           "name": "value",
-          "type": "text",
-          "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
+          "primaryKey": false,
+          "type": "text"
         }
       },
-      "indexes": {},
-      "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
-      "checkConstraints": {}
+      "foreignKeys": {},
+      "indexes": {},
+      "name": "verification",
+      "uniqueConstraints": {}
     }
   },
-  "views": {},
-  "enums": {},
-  "_meta": {
-    "schemas": {},
-    "tables": {},
-    "columns": {}
-  },
-  "internal": {
-    "indexes": {}
-  }
+  "version": "6",
+  "views": {}
 }
