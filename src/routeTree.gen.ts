@@ -8,146 +8,165 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as FormsIndexRouteImport } from "./routes/_forms/index";
-import { Route as FormsSignUpRouteImport } from "./routes/_forms/sign-up";
-import { Route as ProtectedRouteImport } from "./routes/_protected";
-import { Route as ProtectedBoardsRouteImport } from "./routes/_protected/boards";
-import { Route as ApiAuthSplatRouteImport } from "./routes/api/auth/$";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProtectedRouteImport } from './routes/_protected'
+import { Route as FormsIndexRouteImport } from './routes/_forms/index'
+import { Route as ProtectedBoardsRouteImport } from './routes/_protected/boards'
+import { Route as FormsSignUpRouteImport } from './routes/_forms/sign-up'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
+import { Route as ProtectedBoardBoardIdRouteImport } from './routes/_protected/board/$boardId'
 
 const ProtectedRoute = ProtectedRouteImport.update({
+  id: '/_protected',
   getParentRoute: () => rootRouteImport,
-  id: "/_protected",
-} as any);
+} as any)
 const FormsIndexRoute = FormsIndexRouteImport.update({
+  id: '/_forms/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
-  id: "/_forms/",
-  path: "/",
-} as any);
+} as any)
 const ProtectedBoardsRoute = ProtectedBoardsRouteImport.update({
+  id: '/boards',
+  path: '/boards',
   getParentRoute: () => ProtectedRoute,
-  id: "/boards",
-  path: "/boards",
-} as any);
+} as any)
 const FormsSignUpRoute = FormsSignUpRouteImport.update({
+  id: '/_forms/sign-up',
+  path: '/sign-up',
   getParentRoute: () => rootRouteImport,
-  id: "/_forms/sign-up",
-  path: "/sign-up",
-} as any);
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
-  id: "/api/auth/$",
-  path: "/api/auth/$",
-} as any);
+} as any)
+const ProtectedBoardBoardIdRoute = ProtectedBoardBoardIdRouteImport.update({
+  id: '/board/$boardId',
+  path: '/board/$boardId',
+  getParentRoute: () => ProtectedRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-  "/sign-up": typeof FormsSignUpRoute;
-  "/boards": typeof ProtectedBoardsRoute;
-  "/": typeof FormsIndexRoute;
-  "/api/auth/$": typeof ApiAuthSplatRoute;
+  '/sign-up': typeof FormsSignUpRoute
+  '/boards': typeof ProtectedBoardsRoute
+  '/': typeof FormsIndexRoute
+  '/board/$boardId': typeof ProtectedBoardBoardIdRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
-  "/sign-up": typeof FormsSignUpRoute;
-  "/boards": typeof ProtectedBoardsRoute;
-  "/": typeof FormsIndexRoute;
-  "/api/auth/$": typeof ApiAuthSplatRoute;
+  '/sign-up': typeof FormsSignUpRoute
+  '/boards': typeof ProtectedBoardsRoute
+  '/': typeof FormsIndexRoute
+  '/board/$boardId': typeof ProtectedBoardBoardIdRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  "/_protected": typeof ProtectedRouteWithChildren;
-  "/_forms/sign-up": typeof FormsSignUpRoute;
-  "/_protected/boards": typeof ProtectedBoardsRoute;
-  "/_forms/": typeof FormsIndexRoute;
-  "/api/auth/$": typeof ApiAuthSplatRoute;
+  __root__: typeof rootRouteImport
+  '/_protected': typeof ProtectedRouteWithChildren
+  '/_forms/sign-up': typeof FormsSignUpRoute
+  '/_protected/boards': typeof ProtectedBoardsRoute
+  '/_forms/': typeof FormsIndexRoute
+  '/_protected/board/$boardId': typeof ProtectedBoardBoardIdRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
-  fullPaths: "/sign-up" | "/boards" | "/" | "/api/auth/$";
-  fileRoutesByTo: FileRoutesByTo;
-  to: "/sign-up" | "/boards" | "/" | "/api/auth/$";
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/sign-up' | '/boards' | '/' | '/board/$boardId' | '/api/auth/$'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/sign-up' | '/boards' | '/' | '/board/$boardId' | '/api/auth/$'
   id:
-    | "__root__"
-    | "/_protected"
-    | "/_forms/sign-up"
-    | "/_protected/boards"
-    | "/_forms/"
-    | "/api/auth/$";
-  fileRoutesById: FileRoutesById;
+    | '__root__'
+    | '/_protected'
+    | '/_forms/sign-up'
+    | '/_protected/boards'
+    | '/_forms/'
+    | '/_protected/board/$boardId'
+    | '/api/auth/$'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  ProtectedRoute: typeof ProtectedRouteWithChildren;
-  FormsSignUpRoute: typeof FormsSignUpRoute;
-  FormsIndexRoute: typeof FormsIndexRoute;
-  ApiAuthSplatRoute: typeof ApiAuthSplatRoute;
+  ProtectedRoute: typeof ProtectedRouteWithChildren
+  FormsSignUpRoute: typeof FormsSignUpRoute
+  FormsIndexRoute: typeof FormsIndexRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    "/_protected": {
-      id: "/_protected";
-      path: "";
-      fullPath: "";
-      preLoaderRoute: typeof ProtectedRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_forms/": {
-      id: "/_forms/";
-      path: "/";
-      fullPath: "/";
-      preLoaderRoute: typeof FormsIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/_protected/boards": {
-      id: "/_protected/boards";
-      path: "/boards";
-      fullPath: "/boards";
-      preLoaderRoute: typeof ProtectedBoardsRouteImport;
-      parentRoute: typeof ProtectedRoute;
-    };
-    "/_forms/sign-up": {
-      id: "/_forms/sign-up";
-      path: "/sign-up";
-      fullPath: "/sign-up";
-      preLoaderRoute: typeof FormsSignUpRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
-    "/api/auth/$": {
-      id: "/api/auth/$";
-      path: "/api/auth/$";
-      fullPath: "/api/auth/$";
-      preLoaderRoute: typeof ApiAuthSplatRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+    '/_protected': {
+      id: '/_protected'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof ProtectedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_forms/': {
+      id: '/_forms/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof FormsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/boards': {
+      id: '/_protected/boards'
+      path: '/boards'
+      fullPath: '/boards'
+      preLoaderRoute: typeof ProtectedBoardsRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
+    '/_forms/sign-up': {
+      id: '/_forms/sign-up'
+      path: '/sign-up'
+      fullPath: '/sign-up'
+      preLoaderRoute: typeof FormsSignUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_protected/board/$boardId': {
+      id: '/_protected/board/$boardId'
+      path: '/board/$boardId'
+      fullPath: '/board/$boardId'
+      preLoaderRoute: typeof ProtectedBoardBoardIdRouteImport
+      parentRoute: typeof ProtectedRoute
+    }
   }
 }
 
 interface ProtectedRouteChildren {
-  ProtectedBoardsRoute: typeof ProtectedBoardsRoute;
+  ProtectedBoardsRoute: typeof ProtectedBoardsRoute
+  ProtectedBoardBoardIdRoute: typeof ProtectedBoardBoardIdRoute
 }
 
 const ProtectedRouteChildren: ProtectedRouteChildren = {
   ProtectedBoardsRoute: ProtectedBoardsRoute,
-};
+  ProtectedBoardBoardIdRoute: ProtectedBoardBoardIdRoute,
+}
 
 const ProtectedRouteWithChildren = ProtectedRoute._addFileChildren(
   ProtectedRouteChildren,
-);
+)
 
 const rootRouteChildren: RootRouteChildren = {
-  ApiAuthSplatRoute: ApiAuthSplatRoute,
-  FormsIndexRoute: FormsIndexRoute,
-  FormsSignUpRoute: FormsSignUpRoute,
   ProtectedRoute: ProtectedRouteWithChildren,
-};
+  FormsSignUpRoute: FormsSignUpRoute,
+  FormsIndexRoute: FormsIndexRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
-  ._addFileTypes<FileRouteTypes>();
+  ._addFileTypes<FileRouteTypes>()
 
-import type { getRouter } from "./router.tsx";
-
-declare module "@tanstack/react-start" {
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
   interface Register {
-    ssr: true;
-    router: Awaited<ReturnType<typeof getRouter>>;
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
   }
 }

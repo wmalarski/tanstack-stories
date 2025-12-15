@@ -34,6 +34,9 @@ const getBoards = createServerFn()
     });
   });
 
+export type GetBoardsReturn = Awaited<ReturnType<typeof getBoards>>;
+export type GetBoardsReturnItem = GetBoardsReturn[0];
+
 export const getBoardsQueryOptions = (args: GetBoardsSchemaArgs) => {
   return queryOptions({
     queryFn: (context) => {

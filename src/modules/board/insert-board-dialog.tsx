@@ -43,29 +43,29 @@ export const InsertBoardDialog = () => {
         Open Dialog
       </DialogTrigger>
       <DialogContent className="sm:max-w-106.25">
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
-          </DialogDescription>
-        </DialogHeader>
-        <insertBoardForm.AppForm>
-          <form action={formAction} className="flex flex-col gap-4">
+        <form action={formAction} className="flex flex-col gap-4">
+          <DialogHeader>
+            <DialogTitle>Edit profile</DialogTitle>
+            <DialogDescription>
+              Make changes to your profile here. Click save when you&apos;re
+              done.
+            </DialogDescription>
+          </DialogHeader>
+          <insertBoardForm.AppForm>
             <BoardFields
               error={insertBoardMutation.error}
               form={insertBoardForm}
             />
-            <insertBoardForm.Button type="submit">
-              Insert
-            </insertBoardForm.Button>
-          </form>
-        </insertBoardForm.AppForm>
-        <DialogFooter>
-          <DialogClose render={<Button variant="outline" />}>
-            Cancel
-          </DialogClose>
-          <Button type="submit">Save changes</Button>
-        </DialogFooter>
+            <DialogFooter>
+              <DialogClose render={<Button variant="outline" />}>
+                Cancel
+              </DialogClose>
+              <insertBoardForm.Button type="submit">
+                Insert
+              </insertBoardForm.Button>
+            </DialogFooter>
+          </insertBoardForm.AppForm>
+        </form>
       </DialogContent>
     </Dialog>
   );
