@@ -18,6 +18,12 @@ export const GetBoardsSchema = v.object({
 
 export type GetBoardsSchemaArgs = v.InferInput<typeof GetBoardsSchema>;
 
+export const GetBoardSchema = v.object({
+  boardId: v.string(),
+});
+
+export type GetBoardSchemaArgs = v.InferInput<typeof GetBoardSchema>;
+
 export const InsertBoardSchema = v.object({
   description: v.optional(v.string()),
   title: v.string(),

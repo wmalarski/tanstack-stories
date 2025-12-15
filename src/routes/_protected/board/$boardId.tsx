@@ -1,3 +1,5 @@
+import { BoardContent } from "@/modules/board/board-content";
+
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_protected/board/$boardId")({
@@ -5,5 +7,7 @@ export const Route = createFileRoute("/_protected/board/$boardId")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/_protected/boards/$boardId"!</div>;
+  const params = Route.useParams();
+
+  return <BoardContent boardId={params.boardId} />;
 }

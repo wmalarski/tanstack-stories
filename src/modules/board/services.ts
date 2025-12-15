@@ -3,6 +3,7 @@ import { drizzleMiddleware } from "@/integrations/drizzle/middleware";
 import { schema } from "@/integrations/drizzle/schema";
 
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
+import { notFound } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { eq } from "drizzle-orm";
 import * as v from "valibot";
@@ -11,6 +12,8 @@ import { SELECT_BOARDS_DEFAULT_LIMIT } from "./constants";
 import {
   type AxisDefinition,
   AxisSchema,
+  GetBoardSchema,
+  type GetBoardSchemaArgs,
   GetBoardsSchema,
   type GetBoardsSchemaArgs,
   type InsertBoardArgs,
@@ -44,6 +47,43 @@ export const getBoardsQueryOptions = (args: GetBoardsSchemaArgs) => {
       return getBoards({ data: args, signal: context.signal });
     },
     queryKey: ["getBoards", args] as const,
+  });
+};
+
+const getBoard = createServerFn()
+  .inputValidator(GetBoardSchema)
+  .middleware([drizzleMiddleware, protectedMiddleware])
+  .handler(async ({ context, data }) => {
+    const result = await context.db
+      .select()
+      .from(schema.board)
+      .where(eq(schema.board.id, data.boardId))
+      .limit(1);
+
+    const board = result.at(0);
+
+    if (!board) {
+      throw notFound();
+    }
+
+    const parsed = v.safeParse(AxisSchema, board.axis);
+
+    if (!parsed.success) {
+      throw notFound();
+    }
+
+    return { ...board, axis: parsed.output };
+  });
+
+export type GetBoardReturn = Awaited<ReturnType<typeof getBoard>>;
+
+export const getBoardQueryOptions = (args: GetBoardSchemaArgs) => {
+  return queryOptions({
+    queryFn: (context) => {
+      const [_key, args] = context.queryKey;
+      return getBoard({ data: args, signal: context.signal });
+    },
+    queryKey: ["getBoard", args] as const,
   });
 };
 
