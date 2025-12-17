@@ -1,0 +1,183 @@
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  FieldSet,
+} from "@/components/ui/field";
+import { FormError } from "@/components/ui/form-error";
+import {
+  Popover,
+  PopoverContent,
+  PopoverPositioner,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useAppForm, withForm } from "@/integrations/tanstack-form";
+
+import { useMutation } from "@tanstack/react-query";
+import * as v from "valibot";
+
+import { type GetBoardReturn, updateBoardMutationOptions } from "./services";
+import type { AxisDefinition } from "./validation";
+
+const AxisFieldsSchema = v.object({
+  name: v.string(),
+});
+
+type AxisFieldsArgs = v.InferInput<typeof AxisFieldsSchema>;
+
+type AxisFieldsProps = {
+  error?: Error | null;
+};
+
+const AxisFields = withForm({
+  defaultValues: { name: "name" } as AxisFieldsArgs,
+  props: {} as AxisFieldsProps,
+  render: ({ form, error }) => {
+    return (
+      <FieldSet>
+        <FormError message={error?.message} />
+
+        <FieldGroup>
+          <form.AppField name="name">
+            {(field) => (
+              <Field data-invalid={!field.state.meta.isValid}>
+                <FieldLabel>Name</FieldLabel>
+                <field.Input placeholder="Name" required width="full" />
+                <FieldError errors={field.state.meta.errors} />
+              </Field>
+            )}
+          </form.AppField>
+        </FieldGroup>
+      </FieldSet>
+    );
+  },
+  validators: { onSubmit: AxisFieldsSchema },
+});
+
+type InsertAxisFormProps = {
+  index: number;
+  board: GetBoardReturn;
+  axisKey: keyof AxisDefinition;
+};
+
+const InsertAxisForm = ({ index, board, axisKey }: InsertAxisFormProps) => {
+  const updateBoardMutation = useMutation(updateBoardMutationOptions());
+
+  const updateBoardForm = useAppForm({
+    defaultValues: { name: "" } as AxisFieldsArgs,
+    onSubmit: async (data) => {
+      const copy = [...board.axis[axisKey]];
+      copy.splice(index, 0, {
+        id: String(Date.now()),
+        name: data.value.name,
+      });
+
+      await updateBoardMutation.mutateAsync({
+        axis: { ...board.axis, [axisKey]: copy },
+        boardId: board.id,
+      });
+    },
+    validators: { onSubmit: AxisFieldsSchema },
+  });
+
+  const formAction = async () => {
+    await updateBoardForm.handleSubmit();
+  };
+
+  return (
+    <form action={formAction} className="flex flex-col gap-4">
+      <AxisFields error={updateBoardMutation.error} form={updateBoardForm} />
+      <updateBoardForm.Button type="submit">Insert</updateBoardForm.Button>
+    </form>
+  );
+};
+
+type UpdateAxisFormProps = {
+  index: number;
+  board: GetBoardReturn;
+  axisKey: keyof AxisDefinition;
+};
+
+const UpdateAxisForm = ({ index, board, axisKey }: UpdateAxisFormProps) => {
+  const updateBoardMutation = useMutation(updateBoardMutationOptions());
+
+  const updateBoardForm = useAppForm({
+    defaultValues: { name: "" } as AxisFieldsArgs,
+    onSubmit: async (data) => {
+      const copy = [...board.axis[axisKey]];
+      copy.splice(index, 1, {
+        id: copy[index].id,
+        name: data.value.name,
+      });
+
+      await updateBoardMutation.mutateAsync({
+        axis: { ...board.axis, [axisKey]: copy },
+        boardId: board.id,
+      });
+    },
+    validators: { onSubmit: AxisFieldsSchema },
+  });
+
+  const formAction = async () => {
+    await updateBoardForm.handleSubmit();
+  };
+
+  return (
+    <form action={formAction} className="flex flex-col gap-4">
+      <AxisFields error={updateBoardMutation.error} form={updateBoardForm} />
+      <updateBoardForm.Button type="submit">Update</updateBoardForm.Button>
+    </form>
+  );
+};
+
+type InsertAxisItemPopoverProps = {
+  index: number;
+  board: GetBoardReturn;
+  axisKey: keyof AxisDefinition;
+};
+
+export const InsertAxisItemPopover = ({
+  axisKey,
+  board,
+  index,
+}: InsertAxisItemPopoverProps) => {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline" />}>
+        Insert axis item
+      </PopoverTrigger>
+      <PopoverPositioner>
+        <PopoverContent className="w-80">
+          <InsertAxisForm axisKey={axisKey} board={board} index={index} />
+        </PopoverContent>
+      </PopoverPositioner>
+    </Popover>
+  );
+};
+
+type UpdateAxisItemPopoverProps = {
+  index: number;
+  board: GetBoardReturn;
+  axisKey: keyof AxisDefinition;
+};
+
+export const UpdateAxisItemPopover = ({
+  axisKey,
+  board,
+  index,
+}: UpdateAxisItemPopoverProps) => {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline" />}>
+        Update axis item
+      </PopoverTrigger>
+      <PopoverPositioner>
+        <PopoverContent className="w-80">
+          <UpdateAxisForm axisKey={axisKey} board={board} index={index} />
+        </PopoverContent>
+      </PopoverPositioner>
+    </Popover>
+  );
+};
