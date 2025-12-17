@@ -18,6 +18,8 @@ import {
   type GetBoardsSchemaArgs,
   type InsertBoardArgs,
   InsertBoardSchema,
+  type UpdateBoardArgs,
+  UpdateBoardSchema,
 } from "./validation";
 
 const getBoards = createServerFn()
@@ -111,10 +113,39 @@ export const insertBoardMutationOptions = () => {
       return insertBoard({ data: args });
     },
     onSuccess(_data, _variables, _onMutate, context) {
+      const options = getBoardsQueryOptions({ page: 0 });
       return context.client.invalidateQueries({
         exact: false,
-        queryKey: getBoardsQueryOptions({ page: 0 }).queryKey,
+        queryKey: options.queryKey,
       });
+    },
+  });
+};
+
+const updateBoard = createServerFn({ method: "POST" })
+  .inputValidator(UpdateBoardSchema)
+  .middleware([drizzleMiddleware, protectedMiddleware])
+  .handler(async ({ context, data }) => {
+    const { boardId, ...update } = data;
+
+    const result = await context.db
+      .update(schema.board)
+      .set(update)
+      .where(eq(schema.board.id, boardId));
+
+    return result.success;
+  });
+
+export const updateBoardMutationOptions = () => {
+  return mutationOptions({
+    mutationFn: (args: UpdateBoardArgs) => {
+      return updateBoard({ data: args });
+    },
+    onSuccess(_data, variables, _onMutate, context) {
+      const queryOptions = getBoardQueryOptions({ boardId: variables.boardId });
+      context.client.setQueryData(queryOptions.queryKey, (current) =>
+        current ? { ...current, ...variables } : undefined,
+      );
     },
   });
 };

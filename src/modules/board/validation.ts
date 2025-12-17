@@ -30,3 +30,12 @@ export const InsertBoardSchema = v.object({
 });
 
 export type InsertBoardArgs = v.InferInput<typeof InsertBoardSchema>;
+
+export const UpdateBoardSchema = v.object({
+  axis: v.optional(AxisSchema),
+  boardId: v.pipe(v.string(), v.uuid()),
+  description: v.optional(v.string()),
+  title: v.optional(v.string()),
+});
+
+export type UpdateBoardArgs = v.InferInput<typeof UpdateBoardSchema>;

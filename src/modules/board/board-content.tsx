@@ -11,3 +11,7 @@ export const BoardContent = ({ boardId }: BoardContentProps) => {
 
   return <pre>{JSON.stringify(getBoardQuery.data, null, 2)}</pre>;
 };
+
+const AddAxisPopover = () => {
+  return null;
+};
