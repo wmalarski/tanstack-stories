@@ -87,10 +87,12 @@ const InsertAxisForm = ({ index, board, axisKey }: InsertAxisFormProps) => {
   };
 
   return (
-    <form action={formAction} className="flex flex-col gap-4">
-      <AxisFields error={updateBoardMutation.error} form={updateBoardForm} />
-      <updateBoardForm.Button type="submit">Insert</updateBoardForm.Button>
-    </form>
+    <updateBoardForm.AppForm>
+      <form action={formAction} className="flex flex-col gap-4">
+        <AxisFields error={updateBoardMutation.error} form={updateBoardForm} />
+        <updateBoardForm.Button type="submit">Insert</updateBoardForm.Button>
+      </form>
+    </updateBoardForm.AppForm>
   );
 };
 
@@ -125,10 +127,12 @@ const UpdateAxisForm = ({ index, board, axisKey }: UpdateAxisFormProps) => {
   };
 
   return (
-    <form action={formAction} className="flex flex-col gap-4">
-      <AxisFields error={updateBoardMutation.error} form={updateBoardForm} />
-      <updateBoardForm.Button type="submit">Update</updateBoardForm.Button>
-    </form>
+    <updateBoardForm.AppForm>
+      <form action={formAction} className="flex flex-col gap-4">
+        <AxisFields error={updateBoardMutation.error} form={updateBoardForm} />
+        <updateBoardForm.Button type="submit">Update</updateBoardForm.Button>
+      </form>
+    </updateBoardForm.AppForm>
   );
 };
 

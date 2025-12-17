@@ -30,10 +30,17 @@ export const BoardContent = ({ boardId }: BoardContentProps) => {
             />
           </div>
         ))}
+        {getBoardQuery.data.axis.x.length === 0 ? (
+          <InsertAxisItemPopover
+            axisKey="x"
+            board={getBoardQuery.data}
+            index={0}
+          />
+        ) : null}
       </div>
       <div>
         <span>Y</span>
-        {getBoardQuery.data.axis.x.map((item, index) => (
+        {getBoardQuery.data.axis.y.map((item, index) => (
           <div key={item.id}>
             <span>{item.name}</span>
             <UpdateAxisItemPopover
@@ -48,6 +55,13 @@ export const BoardContent = ({ boardId }: BoardContentProps) => {
             />
           </div>
         ))}
+        {getBoardQuery.data.axis.y.length === 0 ? (
+          <InsertAxisItemPopover
+            axisKey="y"
+            board={getBoardQuery.data}
+            index={0}
+          />
+        ) : null}
       </div>
     </>
   );
