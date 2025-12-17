@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
+import { InsertAxisItemPopover, UpdateAxisItemPopover } from "./axis-dialogs";
 import { getBoardQueryOptions } from "./services";
 
 type BoardContentProps = {
@@ -9,5 +10,45 @@ type BoardContentProps = {
 export const BoardContent = ({ boardId }: BoardContentProps) => {
   const getBoardQuery = useSuspenseQuery(getBoardQueryOptions({ boardId }));
 
-  return <pre>{JSON.stringify(getBoardQuery.data, null, 2)}</pre>;
+  return (
+    <>
+      <pre>{JSON.stringify(getBoardQuery.data, null, 2)}</pre>
+      <div>
+        <span>X</span>
+        {getBoardQuery.data.axis.x.map((item, index) => (
+          <div key={item.id}>
+            <span>{item.name}</span>
+            <UpdateAxisItemPopover
+              axisKey="x"
+              board={getBoardQuery.data}
+              index={index}
+            />
+            <InsertAxisItemPopover
+              axisKey="x"
+              board={getBoardQuery.data}
+              index={index}
+            />
+          </div>
+        ))}
+      </div>
+      <div>
+        <span>Y</span>
+        {getBoardQuery.data.axis.x.map((item, index) => (
+          <div key={item.id}>
+            <span>{item.name}</span>
+            <UpdateAxisItemPopover
+              axisKey="y"
+              board={getBoardQuery.data}
+              index={index}
+            />
+            <InsertAxisItemPopover
+              axisKey="y"
+              board={getBoardQuery.data}
+              index={index}
+            />
+          </div>
+        ))}
+      </div>
+    </>
+  );
 };
