@@ -1,6 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 
-import { InsertAxisItemPopover, UpdateAxisItemPopover } from "./axis-dialogs";
+import {
+  DeleteAxisPopover,
+  InsertAxisItemPopover,
+  UpdateAxisItemPopover,
+} from "./axis-dialogs";
 import { getBoardQueryOptions } from "./services";
 
 type BoardContentProps = {
@@ -19,6 +23,11 @@ export const BoardContent = ({ boardId }: BoardContentProps) => {
           <div key={item.id}>
             <span>{item.name}</span>
             <UpdateAxisItemPopover
+              axisKey="x"
+              board={getBoardQuery.data}
+              index={index}
+            />
+            <DeleteAxisPopover
               axisKey="x"
               board={getBoardQuery.data}
               index={index}
@@ -44,6 +53,11 @@ export const BoardContent = ({ boardId }: BoardContentProps) => {
           <div key={item.id}>
             <span>{item.name}</span>
             <UpdateAxisItemPopover
+              axisKey="y"
+              board={getBoardQuery.data}
+              index={index}
+            />
+            <DeleteAxisPopover
               axisKey="y"
               board={getBoardQuery.data}
               index={index}

@@ -13,9 +13,11 @@ import {
   PopoverPositioner,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Spinner } from "@/components/ui/spinner";
 import { useAppForm, withForm } from "@/integrations/tanstack-form";
 
 import { useMutation } from "@tanstack/react-query";
+import { useFormStatus } from "react-dom";
 import * as v from "valibot";
 
 import { type GetBoardReturn, updateBoardMutationOptions } from "./services";
@@ -180,6 +182,68 @@ export const UpdateAxisItemPopover = ({
       <PopoverPositioner>
         <PopoverContent className="w-80">
           <UpdateAxisForm axisKey={axisKey} board={board} index={index} />
+        </PopoverContent>
+      </PopoverPositioner>
+    </Popover>
+  );
+};
+
+const DeleteAxisSubmit = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button disabled={pending} type="submit">
+      {pending ? <Spinner /> : null}
+      Delete
+    </Button>
+  );
+};
+
+type DeleteAxisFormProps = {
+  index: number;
+  board: GetBoardReturn;
+  axisKey: keyof AxisDefinition;
+};
+
+const DeleteAxisForm = ({ index, board, axisKey }: DeleteAxisFormProps) => {
+  const updateBoardMutation = useMutation(updateBoardMutationOptions());
+
+  const formAction = async () => {
+    const copy = [...board.axis[axisKey]];
+    copy.splice(index, 1);
+
+    await updateBoardMutation.mutateAsync({
+      axis: { ...board.axis, [axisKey]: copy },
+      boardId: board.id,
+    });
+  };
+
+  return (
+    <form action={formAction} className="flex flex-col gap-4">
+      <DeleteAxisSubmit />
+    </form>
+  );
+};
+
+type DeleteAxisPopoverProps = {
+  index: number;
+  board: GetBoardReturn;
+  axisKey: keyof AxisDefinition;
+};
+
+export const DeleteAxisPopover = ({
+  axisKey,
+  board,
+  index,
+}: DeleteAxisPopoverProps) => {
+  return (
+    <Popover>
+      <PopoverTrigger render={<Button variant="outline" />}>
+        Delete axis item
+      </PopoverTrigger>
+      <PopoverPositioner>
+        <PopoverContent className="w-80">
+          <DeleteAxisForm axisKey={axisKey} board={board} index={index} />
         </PopoverContent>
       </PopoverPositioner>
     </Popover>
