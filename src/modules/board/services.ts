@@ -107,13 +107,22 @@ const insertBoard = createServerFn({ method: "POST" })
     return result.success;
   });
 
-export const insertBoardMutationOptions = () => {
+type InsertBoardMutationOptionsArgs = {
+  onSuccess: () => void;
+};
+
+export const insertBoardMutationOptions = ({
+  onSuccess,
+}: InsertBoardMutationOptionsArgs) => {
   return mutationOptions({
     mutationFn: (args: InsertBoardArgs) => {
       return insertBoard({ data: args });
     },
     onSuccess(_data, _variables, _onMutate, context) {
       const options = getBoardsQueryOptions({ page: 0 });
+
+      onSuccess();
+
       return context.client.invalidateQueries({
         exact: false,
         queryKey: options.queryKey,
@@ -136,7 +145,13 @@ const updateBoard = createServerFn({ method: "POST" })
     return result.success;
   });
 
-export const updateBoardMutationOptions = () => {
+type UpdateBoardMutationOptionsArgs = {
+  onSuccess?: () => void;
+};
+
+export const updateBoardMutationOptions = ({
+  onSuccess,
+}: UpdateBoardMutationOptionsArgs = {}) => {
   return mutationOptions({
     mutationFn: (args: UpdateBoardArgs) => {
       return updateBoard({ data: args });
@@ -146,6 +161,8 @@ export const updateBoardMutationOptions = () => {
       context.client.setQueryData(queryOptions.queryKey, (current) =>
         current ? { ...current, ...variables } : undefined,
       );
+
+      onSuccess?.();
     },
   });
 };

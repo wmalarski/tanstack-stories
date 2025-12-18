@@ -17,6 +17,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { useAppForm, withForm } from "@/integrations/tanstack-form";
 
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { useFormStatus } from "react-dom";
 import * as v from "valibot";
 
@@ -62,10 +63,20 @@ type InsertAxisFormProps = {
   index: number;
   board: GetBoardReturn;
   axisKey: keyof AxisDefinition;
+  onSuccess: () => void;
 };
 
-const InsertAxisForm = ({ index, board, axisKey }: InsertAxisFormProps) => {
-  const updateBoardMutation = useMutation(updateBoardMutationOptions());
+const InsertAxisForm = ({
+  index,
+  board,
+  axisKey,
+  onSuccess,
+}: InsertAxisFormProps) => {
+  const updateBoardMutation = useMutation(
+    updateBoardMutationOptions({
+      onSuccess,
+    }),
+  );
 
   const updateBoardForm = useAppForm({
     defaultValues: { name: "" } as AxisFieldsArgs,
@@ -102,10 +113,18 @@ type UpdateAxisFormProps = {
   index: number;
   board: GetBoardReturn;
   axisKey: keyof AxisDefinition;
+  onSuccess: () => void;
 };
 
-const UpdateAxisForm = ({ index, board, axisKey }: UpdateAxisFormProps) => {
-  const updateBoardMutation = useMutation(updateBoardMutationOptions());
+const UpdateAxisForm = ({
+  index,
+  board,
+  axisKey,
+  onSuccess,
+}: UpdateAxisFormProps) => {
+  const updateBoardMutation = useMutation(
+    updateBoardMutationOptions({ onSuccess }),
+  );
 
   const updateBoardForm = useAppForm({
     defaultValues: { name: "" } as AxisFieldsArgs,
@@ -120,6 +139,8 @@ const UpdateAxisForm = ({ index, board, axisKey }: UpdateAxisFormProps) => {
         axis: { ...board.axis, [axisKey]: copy },
         boardId: board.id,
       });
+
+      onSuccess();
     },
     validators: { onSubmit: AxisFieldsSchema },
   });
@@ -149,14 +170,25 @@ export const InsertAxisItemPopover = ({
   board,
   index,
 }: InsertAxisItemPopoverProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onSuccess = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover onOpenChange={setIsOpen} open={isOpen}>
       <PopoverTrigger render={<Button variant="outline" />}>
         Insert axis item
       </PopoverTrigger>
       <PopoverPositioner>
         <PopoverContent className="w-80">
-          <InsertAxisForm axisKey={axisKey} board={board} index={index} />
+          <InsertAxisForm
+            axisKey={axisKey}
+            board={board}
+            index={index}
+            onSuccess={onSuccess}
+          />
         </PopoverContent>
       </PopoverPositioner>
     </Popover>
@@ -174,14 +206,25 @@ export const UpdateAxisItemPopover = ({
   board,
   index,
 }: UpdateAxisItemPopoverProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onSuccess = () => {
+    setIsOpen(false);
+  };
+
   return (
-    <Popover>
+    <Popover onOpenChange={setIsOpen} open={isOpen}>
       <PopoverTrigger render={<Button variant="outline" />}>
         Update axis item
       </PopoverTrigger>
       <PopoverPositioner>
         <PopoverContent className="w-80">
-          <UpdateAxisForm axisKey={axisKey} board={board} index={index} />
+          <UpdateAxisForm
+            axisKey={axisKey}
+            board={board}
+            index={index}
+            onSuccess={onSuccess}
+          />
         </PopoverContent>
       </PopoverPositioner>
     </Popover>
